@@ -12,17 +12,12 @@ import {
   HostBinding,
   Input,
   Output,
-  EventEmitter,
+  EventEmitter
 } from '@angular/core';
 
-import {
-  CookieLawService,
-} from './cookie-law.service';
+import { CookieLawService } from './cookie-law.service';
 import { CookieLawElementComponent } from './cookie-law-element.component';
-import {
-  CookieLawTarget,
-  CookieLawPosition,
-} from './definitions';
+import { CookieLawTarget, CookieLawPosition } from './definitions';
 
 @Component({
   selector: 'cookie-law',
@@ -31,39 +26,35 @@ import {
                    [learnMore]="learnMore"
                    [target]="target"
                    [position]="position"
+                   [svgIcon]="svgIcon"
                    (isSeen)="hasBeenDismissed()"><ng-content></ng-content></cookie-law-el>
-  `,
+  `
 })
 export class CookieLawComponent implements OnInit {
-  @HostBinding('attr.seen')
-  public seen: boolean = true;
+  @HostBinding('attr.seen') public seen: boolean = true;
 
   @ViewChild(CookieLawElementComponent)
   public cookieLawComponent: CookieLawElementComponent;
 
-  @Input()
-  public name: string;
+  @Input() public name: string;
 
-  @Input()
-  public learnMore: string;
+  @Input() public learnMore: string;
 
-  @Input()
-  public target: CookieLawTarget;
+  @Input() public target: CookieLawTarget;
 
-  @Input()
-  public position: CookieLawPosition;
+  @Input() public position: CookieLawPosition;
 
-  @Input()
-  public expiration: number;
+  @Input() public expiration: number;
 
-  @Output()
-  public isSeen = new EventEmitter<boolean>();
+  @Input() public svgIcon: string;
+
+  @Output() public isSeen = new EventEmitter<boolean>();
 
   public get cookieLawSeen(): boolean {
     return this._service.seen(this.name);
   }
 
-  constructor (private _service: CookieLawService) {
+  constructor(private _service: CookieLawService) {
     this.name = 'cookieLawSeen'; // set a default cookie name if not provided
   }
 
